@@ -17,13 +17,13 @@
 
 ; --- Global variables ---
 ; This template does not contain any global variables, but if you need them you can add them here.
-globals [stop_game dirt steps left_no right_no max_pxcor max_pycor]
+globals [stop_game dirt steps left_no right_no max_pxcor max_pycor is_obs]
 
 ; --- Setup ---
 to setup
   clear-all
   set steps 0
-
+  set stop_game false
   setup-patches
   setup-turtles
   setup-ticks
@@ -34,12 +34,15 @@ end
 to go
   ; This method executes the main processing cycle of an agent.
   ; For Assignment 2, this only involves the execution of actions (and advancing the tick counter).
-  ifelse (dirt > 0)
+;  set dirt (count patches with [pcolor = grey])
+  ifelse (stop_game = false)
   [
     show "one step"
     execute-actions
     tick
     set dirt (count patches with [pcolor = grey])
+    if dirt = 0 [set stop_game true]
+
   ]
   [show "game over"]
 
@@ -90,11 +93,23 @@ to execute-actions
   ; You can separate these actions into two different methods if you want, but these methods should only be called from here!
   ask turtles [
     ifelse pcolor = grey
-    [set pcolor green]
+    [set pcolor green
+      if (count (patches with [pcolor = grey]) > 0)[
+        face (min-one-of (patches with [pcolor = grey]) [distance myself])
+        ]
+
+      ]
     [
-     ; otherwise, try to find a patch of color grey and heads towards it
-     face (min-one-of (patches with [pcolor = grey]) [distance myself])
-     forward 1
+     ifelse can-move? 1 [
+     set is_obs false
+     ask (patch-ahead 1) [if pcolor = black [set is_obs true]]
+     ifelse (is_obs = false)
+     [forward 1]
+     [right random 360]; randomly turn left or right
+     ; TODO: This can be improved by turning towards the dirt
+     ;forward 1
+     ]
+     [right random 360]
     ]
   ]
     ;right random 360
