@@ -73,7 +73,7 @@ to setup-turtles
   create-turtles 1
 
   ask turtles [
-    setxy 0 0
+    setxy 0 0 ; TODO: set the turtle at a location without obstercles
     face (min-one-of (patches with [pcolor = grey]) [distance myself])
     ;set shape "wolf"
     ]

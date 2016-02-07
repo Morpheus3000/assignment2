@@ -70,7 +70,7 @@ to setup-turtles
 
   ask turtles [
     setxy 0 0
-    set heading 180
+    face (min-one-of (patches with [pcolor = grey]) [distance myself])
     ;set shape "wolf"
     ]
 end
