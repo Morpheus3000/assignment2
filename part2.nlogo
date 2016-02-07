@@ -21,9 +21,9 @@ globals [stop_game dirt steps left_no right_no max_pxcor max_pycor]
 
 ; --- Setup ---
 to setup
-  set stop_game false
-  set steps 0
   clear-all
+  set steps 0
+
   setup-patches
   setup-turtles
   setup-ticks
@@ -34,11 +34,14 @@ end
 to go
   ; This method executes the main processing cycle of an agent.
   ; For Assignment 2, this only involves the execution of actions (and advancing the tick counter).
-  ifelse (stop_game = 0)
-  [execute-actions
-  tick
-  set dirt (count patches with [pcolor = grey])]
-  [show steps]
+  ifelse (dirt > 0)
+  [
+    show "one step"
+    execute-actions
+    tick
+    set dirt (count patches with [pcolor = grey])
+  ]
+  [show "game over"]
 
 end
 
@@ -67,6 +70,7 @@ to setup-turtles
 
   ask turtles [
     setxy 0 0
+    set heading 0
     ;set shape "wolf"
     ]
 end
@@ -89,36 +93,34 @@ to execute-actions
     [
       set left_no 0
       set right_no 0
-      ask patch-right-and-ahead 30 2 [
-        set right_no (right_no + 1)
+      ask patch-right-and-ahead 30 3 [
+        if pcolor = grey [set right_no (right_no + 1)]
         ]
-      ask patch-left-and-ahead 30 2 [
-        set left_no (left_no + 1)
+      ask patch-left-and-ahead 30 3 [
+        if pcolor = grey [set left_no (left_no + 1)]
         ]
-      if left_no = right_no[forward 1]
-      if left_no > right_no [left random 90
-        forward 1]
-      if right_no > left_no [right random 90
-        forward 1]
+
+      show right_no
+      show left_no
+      if left_no > right_no [left random 180]
+      if right_no > left_no [right random 180]
     ]
+    forward 1
   ]
     ;right random 360
     ;forward 1
     ;set steps (steps + 1)] ; find where the next dirt is, and set the direction towards that way.
 
-  if dirt = 0
-  [show dirt
-    set stop_game true]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
 230
 10
 475
-48
+131
 -1
 -1
-1.0
+10.0
 1
 10
 1
@@ -131,7 +133,7 @@ GRAPHICS-WINDOW
 0
 8
 0
-6
+8
 1
 1
 1
@@ -192,7 +194,7 @@ dirt_pct
 dirt_pct
 0
 9
-5
+8
 1
 1
 NIL
@@ -244,7 +246,7 @@ hight
 hight
 0
 100
-6
+8
 1
 1
 NIL
