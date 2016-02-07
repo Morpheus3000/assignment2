@@ -59,6 +59,7 @@ to setup-patches
 
   ask n-of dirt_pct patches [set pcolor grey]
   set dirt dirt_pct
+  ask n-of obs patches with [pcolor = green] [set pcolor black]
 
 end
 
@@ -70,7 +71,7 @@ to setup-turtles
 
   ask turtles [
     setxy 0 0
-    set heading 180
+    face (min-one-of (patches with [pcolor = grey]) [distance myself])
     ;set shape "wolf"
     ]
 end
@@ -135,7 +136,7 @@ GRAPHICS-WINDOW
 230
 10
 475
-221
+281
 -1
 -1
 20.0
@@ -151,7 +152,7 @@ GRAPHICS-WINDOW
 0
 8
 0
-8
+11
 1
 1
 1
@@ -218,33 +219,11 @@ dirt_pct
 NIL
 HORIZONTAL
 
-MONITOR
-10
-158
-67
-203
-steps
-steps
-17
-1
-11
-
-MONITOR
-18
-227
-104
-272
-NIL
-stop_game
-17
-1
-11
-
 SLIDER
-17
-296
-189
-329
+6
+166
+178
+199
 width
 width
 0
@@ -256,15 +235,30 @@ NIL
 HORIZONTAL
 
 SLIDER
-18
-347
-190
-380
+6
+212
+178
+245
 hight
 hight
 0
 100
-8
+11
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+9
+261
+181
+294
+obs
+obs
+0
+width * hight - dirt_pct
+10
 1
 1
 NIL
