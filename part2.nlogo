@@ -45,7 +45,9 @@ end
 
 ; --- Setup patches ---
 to setup-patches
-  set-patch-size (width * hight)
+  resize-world 0 width 0 hight
+  set-patch-size 10
+  ; set-patch-size (width * hight)
   ; set-patch-size max_pycor hight
   ; In this method you may create the environment (patches), using colors to define dirty and cleaned cells.
   ask patches [
@@ -112,11 +114,11 @@ end
 GRAPHICS-WINDOW
 230
 10
-515
-316
+475
+48
 -1
 -1
-25.0
+1.0
 1
 10
 1
@@ -127,9 +129,9 @@ GRAPHICS-WINDOW
 1
 1
 0
-10
+8
 0
-10
+6
 1
 1
 1
@@ -227,7 +229,7 @@ width
 width
 0
 100
-16
+8
 1
 1
 NIL
@@ -242,7 +244,7 @@ hight
 hight
 0
 100
-17
+6
 1
 1
 NIL
