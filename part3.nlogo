@@ -113,13 +113,15 @@ to execute-actions
          right random 360
          ]
        ]
-     [
+     [; if it is an obstercle
        face (min-one-of (patches with [pcolor = grey]) [distance myself]); towards the direction of the dirt
-       right random 360]; randomly turn left or right
+       right random 260]; randomly turn left or right
      ; TODO: This can be improved by turning towards the dirt
      ;forward 1
      ]
-     [right random 360]
+     [; if can't reaching the boarder now
+       right random 360]
+
     ]
   ]
     ;right random 360
