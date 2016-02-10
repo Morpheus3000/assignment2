@@ -45,8 +45,8 @@ end
 ; --- Setup patches ---
 to setup-patches
   ; In this method you may create the environment (patches), using colors to define dirty and cleaned cells.
-  resize-world 0 width 0 hight
-  set-patch-size 20
+  resize-world 0 ( width - 1) 0 ( hight - 1)
+  set-patch-size ( 600 / width )
   ask patches [
     set pcolor green
     ]
@@ -103,11 +103,11 @@ end
 GRAPHICS-WINDOW
 210
 10
-600
-461
+820
+1241
 -1
 -1
-20.0
+33.333333333333336
 1
 10
 1
@@ -118,9 +118,9 @@ GRAPHICS-WINDOW
 1
 1
 0
-18
+17
 0
-20
+35
 1
 1
 1
@@ -181,7 +181,7 @@ dirt_pct
 dirt_pct
 0
 1
-0.55
+1
 0.05
 1
 NIL
@@ -222,7 +222,7 @@ hight
 hight
 0
 100
-20
+36
 1
 1
 NIL
