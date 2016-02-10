@@ -71,11 +71,12 @@ end
 ; --- Setup turtles ---
 to setup-turtles
   ; In this method you may create the agents (in this case, there is only 1 agent).
-  create-turtles 1
+  create-turtles 1 [set color red]
 
   ask turtles [
     setxy 0 0 ; TODO: set the turtle at a location without obstercles
-    face (min-one-of (patches with [pcolor = grey]) [distance myself])
+    facexy 0 1
+    ; face (min-one-of (patches with [pcolor = grey]) [distance myself])
     ;set shape "wolf"
     ]
 end
@@ -96,7 +97,7 @@ to execute-actions
     ifelse pcolor = grey
     [set pcolor green
       if (count (patches with [pcolor = grey]) > 0)[
-        face (min-one-of (patches with [pcolor = grey]) [distance myself])
+        ;face (min-one-of (patches with [pcolor = grey]) [distance myself])
         ]
 
       ]
@@ -110,17 +111,17 @@ to execute-actions
        [ forward 1
          ]
        [; otherwise turn left or right
-         right random 360
+         right 90 + 180 * (random 2 )
          ]
        ]
      [; if it is an obstercle
-       face (min-one-of (patches with [pcolor = grey]) [distance myself]); towards the direction of the dirt
-       right random 260]; randomly turn left or right
+       ;face (min-one-of (patches with [pcolor = grey]) [distance myself]); towards the direction of the dirt
+       right 90 + 180 * (random 2 )]; randomly turn left or right
      ; TODO: This can be improved by turning towards the dirt
      ;forward 1
      ]
      [; if can't reaching the boarder now
-       right random 360]
+       right 90 + 180 * (random 2 )]
 
     ]
   ]
