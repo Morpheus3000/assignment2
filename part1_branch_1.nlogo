@@ -49,7 +49,7 @@ to setup-patches
     set pcolor green
     ]
 
-  ask n-of dirt_pct patches [set pcolor grey]
+  ask n-of (dirt_pct * (max-pxcor + 1) * (max-pycor + 1 ))  patches [set pcolor grey]
   ;set dirt dirt_pct
 
 end
@@ -178,9 +178,9 @@ SLIDER
 dirt_pct
 dirt_pct
 0
-9
-3
 1
+0.62
+0.01
 1
 NIL
 HORIZONTAL
