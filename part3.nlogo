@@ -61,8 +61,9 @@ to setup-patches
     ]
 
   ask n-of dirt_pct patches [set pcolor grey]
+
   set dirt dirt_pct
-  ask n-of obs patches with [pcolor = green] [set pcolor black]
+  ask n-of obs patches with [(pcolor = green) and not (pxcor = 0) and not (pycor = 0)] [set pcolor black]
 
 end
 
@@ -99,13 +100,22 @@ to execute-actions
         ]
 
       ]
-    [
+    [; other wise
      ifelse can-move? 1 [
      set is_obs false
      ask (patch-ahead 1) [if pcolor = black [set is_obs true]]
      ifelse (is_obs = false)
-     [forward 1]
-     [right random 360]; randomly turn left or right
+     [; 80% of the chance, it will move ahead
+       ifelse (random-float 1 < 0.8)
+       [ forward 1
+         ]
+       [; otherwise turn left or right
+         right random 360
+         ]
+       ]
+     [
+       face (min-one-of (patches with [pcolor = grey]) [distance myself]); towards the direction of the dirt
+       right random 360]; randomly turn left or right
      ; TODO: This can be improved by turning towards the dirt
      ;forward 1
      ]
